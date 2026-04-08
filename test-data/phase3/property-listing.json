@@ -1,0 +1,67 @@
+{
+  "listing": {
+    "id": "listing_test_001",
+    "address": {
+      "street": "4217 Maplewood Drive",
+      "city": "Crestfield",
+      "state": "OH",
+      "zip": "44112",
+      "county": "Cuyahoga"
+    },
+    "listingPrice": 289000,
+    "originalListPrice": 304900,
+    "priceHistory": [
+      { "date": "2026-01-10", "price": 304900, "event": "Listed" },
+      { "date": "2026-02-03", "price": 294900, "event": "Price Reduction" },
+      { "date": "2026-02-28", "price": 289000, "event": "Price Reduction" }
+    ],
+    "daysOnMarket": 64,
+    "status": "Active",
+    "mlsNumber": "OH-MLS-2026-19847",
+    "listingAgent": "Patricia Owens, RE/MAX Crestfield",
+    "propertyDetails": {
+      "type": "Single Family",
+      "style": "Colonial",
+      "yearBuilt": 1987,
+      "sqft": 2140,
+      "lotSqft": 8712,
+      "bedrooms": 3,
+      "bathrooms": 2.5,
+      "garage": "Attached 2-car",
+      "basement": "Full, partially finished",
+      "stories": 2
+    },
+    "features": [
+      "Central A/C",
+      "Gas forced-air heat",
+      "Attached garage",
+      "Deck",
+      "Vinyl siding",
+      "Double-pane windows",
+      "Gas range",
+      "Dishwasher"
+    ],
+    "taxes": {
+      "annualAmount": 4820,
+      "year": 2025
+    },
+    "hoaFees": null,
+    "listingDescription": "Spacious colonial in established Crestfield neighborhood. 3 bed, 2.5 bath with full basement and large rear deck. Updated water heater (2019). Near Crestfield Elementary and Maple Park. Seller is motivated — priced to sell.",
+    "photos": 18,
+    "virtualTour": false
+  },
+  "neighborhoodSnapshot": {
+    "medianHouseholdIncome": 68400,
+    "medianHomeValue": 274000,
+    "ownerOccupied": 0.71,
+    "renterOccupied": 0.29,
+    "population": 12840,
+    "schoolDistrict": "Crestfield City Schools",
+    "schoolRating": "6/10",
+    "walkScore": 42,
+    "transitScore": 28,
+    "bikeScore": 31,
+    "crimeIndex": "Moderate — slightly above county average",
+    "avgCommuteMinutes": 26
+  }
+}

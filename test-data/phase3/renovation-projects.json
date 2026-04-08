@@ -1,0 +1,189 @@
+{
+  "propertyAddress": "4217 Maplewood Drive, Crestfield, OH 44112",
+  "marketRegion": "Greater Cleveland, OH",
+  "projects": [
+    {
+      "id": "reno_001",
+      "room": "Kitchen",
+      "name": "Mid-Range Kitchen Remodel",
+      "description": "Replace laminate countertops with quartz, replace cabinet fronts (keep boxes), new undermount sink and faucet, tile backsplash, new appliances (range, dishwasher, microwave hood), luxury vinyl plank flooring.",
+      "scope": "mid-range",
+      "estimatedCost": {
+        "low": 18000,
+        "mid": 26000,
+        "high": 34000
+      },
+      "diy": {
+        "possible": true,
+        "partialDIY": "Backsplash, painting, hardware swaps are DIY-able. Countertop, cabinet fronts, appliances, plumbing best left to contractors.",
+        "estimatedDIYSavings": 4000
+      },
+      "roiData": {
+        "nationalAvgROI": 0.67,
+        "localMarketAdjustment": -0.04,
+        "estimatedLocalROI": 0.63,
+        "estimatedValueAdded": {
+          "low": 11340,
+          "mid": 16380,
+          "high": 21420
+        },
+        "notes": "Cleveland market ROI for kitchen remodels runs slightly below national average. Mid-range remodels tend to outperform upscale in this price band — buyers here value function over luxury finishes."
+      },
+      "timelineWeeks": {
+        "low": 3,
+        "high": 6
+      }
+    },
+    {
+      "id": "reno_002",
+      "room": "Master Bathroom",
+      "name": "Master Bath Refresh",
+      "description": "Replace vanity and fixtures, re-tile shower surround (repair failed grout first), new toilet, paint, updated lighting and mirrors. Keeping existing layout.",
+      "scope": "mid-range",
+      "estimatedCost": {
+        "low": 8000,
+        "mid": 12500,
+        "high": 17000
+      },
+      "diy": {
+        "possible": true,
+        "partialDIY": "Painting, mirror/lighting swap, toilet replacement DIY-able. Tile work and vanity plumbing best left to pros.",
+        "estimatedDIYSavings": 2500
+      },
+      "roiData": {
+        "nationalAvgROI": 0.71,
+        "localMarketAdjustment": -0.02,
+        "estimatedLocalROI": 0.69,
+        "estimatedValueAdded": {
+          "low": 5520,
+          "mid": 8625,
+          "high": 11730
+        },
+        "notes": "Bathroom remodels have strong ROI in this market. Master bath update is especially impactful for buyers. Cosmetic refresh (vs. full gut) keeps costs down and ROI percentage high."
+      },
+      "timelineWeeks": {
+        "low": 2,
+        "high": 4
+      }
+    },
+    {
+      "id": "reno_003",
+      "room": "Basement",
+      "name": "Basement Finishing — Rec Room",
+      "description": "Frame and drywall unfinished half of basement (~500 sqft), add egress window, install LVP flooring, recessed lighting, electrical outlets. Not including a wet bar or bathroom.",
+      "scope": "standard",
+      "estimatedCost": {
+        "low": 22000,
+        "mid": 32000,
+        "high": 44000
+      },
+      "diy": {
+        "possible": false,
+        "partialDIY": "Painting and flooring installation can be DIY. Framing, electrical, and egress window require permits and are best left to contractors.",
+        "estimatedDIYSavings": 1500
+      },
+      "roiData": {
+        "nationalAvgROI": 0.70,
+        "localMarketAdjustment": -0.05,
+        "estimatedLocalROI": 0.65,
+        "estimatedValueAdded": {
+          "low": 14300,
+          "mid": 20800,
+          "high": 28600
+        },
+        "notes": "IMPORTANT: Do not begin basement finishing until water intrusion issue is fully resolved and waterproofing is complete. Finishing over an active moisture problem will destroy the investment. Resolve foundation issue first — budget $3K–$8K for that before this project."
+      },
+      "timelineWeeks": {
+        "low": 6,
+        "high": 10
+      },
+      "dependencies": ["Resolve basement water intrusion first"]
+    },
+    {
+      "id": "reno_004",
+      "room": "Exterior",
+      "name": "Deck Rebuild",
+      "description": "Full deck rebuild — proper ledger flashing, pressure-treated frame, composite decking boards (Trex or equivalent), code-compliant railing and stair handrail. Same footprint (~12x16).",
+      "scope": "standard",
+      "estimatedCost": {
+        "low": 14000,
+        "mid": 18500,
+        "high": 24000
+      },
+      "diy": {
+        "possible": false,
+        "partialDIY": "Not recommended for DIY — ledger attachment and railing code compliance requires permits and experience.",
+        "estimatedDIYSavings": 0
+      },
+      "roiData": {
+        "nationalAvgROI": 0.68,
+        "localMarketAdjustment": 0.03,
+        "estimatedLocalROI": 0.71,
+        "estimatedValueAdded": {
+          "low": 9940,
+          "mid": 13135,
+          "high": 17040
+        },
+        "notes": "Decks have above-average ROI in the Midwest — outdoor space is valued. Composite decking adds to upfront cost but appeals to buyers who don't want annual sealing. Rebuild (vs. repair) is the right call given ledger issue."
+      },
+      "timelineWeeks": {
+        "low": 2,
+        "high": 4
+      }
+    },
+    {
+      "id": "reno_005",
+      "room": "Whole House",
+      "name": "Interior Paint — Full House",
+      "description": "Professional paint throughout — all walls, ceilings, trim. Neutral palette (agreeable gray / warm white). 3 bed, 2.5 bath, living, dining, kitchen, basement stairwell.",
+      "scope": "cosmetic",
+      "estimatedCost": {
+        "low": 4500,
+        "mid": 6500,
+        "high": 8500
+      },
+      "diy": {
+        "possible": true,
+        "partialDIY": "Fully DIY-able. Cost drops to ~$800–$1,200 in materials. Time investment is ~3–4 weekends.",
+        "estimatedDIYSavings": 5300
+      },
+      "roiData": {
+        "nationalAvgROI": 1.07,
+        "localMarketAdjustment": 0.0,
+        "estimatedLocalROI": 1.07,
+        "estimatedValueAdded": {
+          "low": 4815,
+          "mid": 6955,
+          "high": 9095
+        },
+        "notes": "Interior paint is one of the highest-ROI projects available — often returns more than cost. Neutral tones appeal to broadest buyer pool. Best bang for buck if budget is limited."
+      },
+      "timelineWeeks": {
+        "low": 1,
+        "high": 2
+      }
+    }
+  ],
+  "summary": {
+    "totalEstimatedCostAllProjects": {
+      "low": 66500,
+      "mid": 95500,
+      "high": 127500
+    },
+    "totalEstimatedValueAdded": {
+      "low": 45915,
+      "mid": 65895,
+      "high": 87885
+    },
+    "highestROIProject": "reno_005",
+    "highestAbsoluteValueProject": "reno_003",
+    "recommendedSequence": [
+      "1. Resolve roof, electrical panel, and basement water intrusion (non-negotiable — required before anything else)",
+      "2. Interior paint (highest ROI, sets tone for everything else)",
+      "3. Master bath refresh (strong ROI, relatively contained project)",
+      "4. Deck rebuild (outdoor living, above-average ROI in this market)",
+      "5. Kitchen remodel (largest investment, do after living in the home)",
+      "6. Basement finishing (only after waterproofing confirmed complete)"
+    ]
+  }
+}

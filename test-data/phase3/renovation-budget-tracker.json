@@ -1,0 +1,183 @@
+{
+  "propertyAddress": "4217 Maplewood Drive, Crestfield, OH 44112",
+  "owner": "Scott & Jamie Mercer",
+  "renovationStartDate": "2026-06-01",
+  "lastUpdated": "2026-09-22",
+  "projects": [
+    {
+      "id": "proj_001",
+      "room": "Exterior / Systems",
+      "name": "Roof Replacement",
+      "status": "completed",
+      "priority": "critical",
+      "budget": 11000,
+      "committed": 10800,
+      "spent": 10800,
+      "variance": 200,
+      "variancePercent": 0.018,
+      "trend": "on_budget",
+      "contractor": "Summit Roofing Co.",
+      "startDate": "2026-06-10",
+      "completedDate": "2026-06-12",
+      "lineItems": [
+        { "description": "Remove existing 2-layer roof", "budgeted": 1200, "actual": 1200 },
+        { "description": "Install 30-year architectural shingles", "budgeted": 7800, "actual": 7600 },
+        { "description": "Replace chimney flashing", "budgeted": 800, "actual": 900 },
+        { "description": "New ridge cap and drip edge", "budgeted": 600, "actual": 600 },
+        { "description": "Gutter re-attachment", "budgeted": 600, "actual": 500 }
+      ],
+      "notes": "Came in slightly under budget. Contractor was able to reuse existing drip edge on south side."
+    },
+    {
+      "id": "proj_002",
+      "room": "Whole House",
+      "name": "Electrical Panel Upgrade",
+      "status": "completed",
+      "priority": "critical",
+      "budget": 2500,
+      "committed": 3200,
+      "spent": 3200,
+      "variance": -700,
+      "variancePercent": -0.28,
+      "trend": "over_budget",
+      "contractor": "Bright Side Electric",
+      "startDate": "2026-06-18",
+      "completedDate": "2026-06-19",
+      "lineItems": [
+        { "description": "Remove FPE Stab-Lok panel", "budgeted": 300, "actual": 300 },
+        { "description": "Install Square D 200A panel (upgraded from 150A)", "budgeted": 1800, "actual": 2200 },
+        { "description": "Permit and inspection fee", "budgeted": 200, "actual": 350 },
+        { "description": "Update double-tapped breaker", "budgeted": 100, "actual": 100 },
+        { "description": "Upgrade garage outlet to 3-prong GFCI", "budgeted": 100, "actual": 100 },
+        { "description": "Add AFCI breakers for bedrooms (recommended)", "budgeted": 0, "actual": 150 }
+      ],
+      "notes": "Went over budget — electrician recommended upgrading to 200A service while the panel was open (future-proofing for EV charger). Also added AFCI breakers for bedrooms per new code. Approved as scope addition. Permit fee was higher than anticipated."
+    },
+    {
+      "id": "proj_003",
+      "room": "Basement",
+      "name": "Basement Waterproofing",
+      "status": "completed",
+      "priority": "critical",
+      "budget": 5500,
+      "committed": 6200,
+      "spent": 6200,
+      "variance": -700,
+      "variancePercent": -0.127,
+      "trend": "over_budget",
+      "contractor": "DryShield Waterproofing",
+      "startDate": "2026-07-08",
+      "completedDate": "2026-07-15",
+      "lineItems": [
+        { "description": "Interior French drain — NE wall", "budgeted": 3200, "actual": 3200 },
+        { "description": "Sump pump replacement (new with battery backup)", "budgeted": 800, "actual": 1200 },
+        { "description": "Crack injection — 2 cracks found", "budgeted": 600, "actual": 900 },
+        { "description": "Sump basin lid with radon port", "budgeted": 150, "actual": 150 },
+        { "description": "Lifetime transferable warranty", "budgeted": 750, "actual": 750 }
+      ],
+      "notes": "Specialist found a second crack during work — required additional injection. Also upgraded to sump pump with battery backup (hurricane season concern). Both approved. Warranty is transferable to future buyers — good for resale."
+    },
+    {
+      "id": "proj_004",
+      "room": "Whole House",
+      "name": "Interior Paint — Full House",
+      "status": "completed",
+      "priority": "high",
+      "budget": 6500,
+      "committed": 5800,
+      "spent": 5800,
+      "variance": 700,
+      "variancePercent": 0.108,
+      "trend": "under_budget",
+      "contractor": "Two Brothers Painting",
+      "startDate": "2026-07-21",
+      "completedDate": "2026-07-25",
+      "lineItems": [
+        { "description": "All walls — 3 bedrooms, living, dining, kitchen", "budgeted": 3200, "actual": 2900 },
+        { "description": "All ceilings", "budgeted": 1400, "actual": 1200 },
+        { "description": "Trim and doors", "budgeted": 1200, "actual": 1200 },
+        { "description": "Materials (paint, primer, supplies)", "budgeted": 700, "actual": 500 }
+      ],
+      "notes": "Came in under budget. Crew was fast — skipped basement stairwell (doing ourselves). Chose Sherwin-Williams Accessible Beige for main areas, Extra White for ceilings."
+    },
+    {
+      "id": "proj_005",
+      "room": "Exterior",
+      "name": "Deck Rebuild",
+      "status": "in_progress",
+      "priority": "high",
+      "budget": 18500,
+      "committed": 21400,
+      "spent": 8900,
+      "variance": -2900,
+      "variancePercent": -0.157,
+      "trend": "over_budget",
+      "contractor": "Lakewood Outdoor Builders",
+      "startDate": "2026-09-08",
+      "estimatedCompletionDate": "2026-10-03",
+      "lineItems": [
+        { "description": "Demo existing deck", "budgeted": 800, "actual": 800 },
+        { "description": "New ledger with proper flashing", "budgeted": 1200, "actual": 1200 },
+        { "description": "PT lumber frame and posts", "budgeted": 4200, "actual": 4800 },
+        { "description": "Trex Transcend composite decking", "budgeted": 7500, "actual": 9200 },
+        { "description": "Aluminum railing system (code compliant)", "budgeted": 3200, "actual": 3800 },
+        { "description": "Stair rebuild with graspable rail", "budgeted": 1000, "actual": 1200 },
+        { "description": "Permit and inspections", "budgeted": 600, "actual": 400 }
+      ],
+      "notes": "OVER BUDGET — two issues: (1) lumber costs higher than quote due to material price increase since estimate was given in June. (2) Contractor found one post had a rotted base once demo'd — required concrete pier replacement. Composite decking also went up in cost. Currently $2,900 over budget with ~$12,500 remaining committed spend. Monitoring closely.",
+      "alertTriggered": true,
+      "alertMessage": "Project is tracking 15.7% over original budget ($2,900). Primary drivers: lumber price increase since original quote and unexpected post replacement. Review remaining scope with contractor before authorizing further work."
+    },
+    {
+      "id": "proj_006",
+      "room": "Master Bathroom",
+      "name": "Master Bath Refresh",
+      "status": "planned",
+      "priority": "medium",
+      "budget": 12500,
+      "committed": 0,
+      "spent": 0,
+      "variance": 12500,
+      "variancePercent": 1.0,
+      "trend": "not_started",
+      "contractor": null,
+      "plannedStartDate": "2026-11-01",
+      "notes": "Waiting for deck to complete. Getting 3 quotes in October. Consider pausing if deck overrun is significant — may need to rebalance budget."
+    },
+    {
+      "id": "proj_007",
+      "room": "Kitchen",
+      "name": "Mid-Range Kitchen Remodel",
+      "status": "planned",
+      "priority": "medium",
+      "budget": 26000,
+      "committed": 0,
+      "spent": 0,
+      "variance": 26000,
+      "variancePercent": 1.0,
+      "trend": "not_started",
+      "contractor": null,
+      "plannedStartDate": "2027-02-01",
+      "notes": "Not starting until spring 2027 at earliest. Will revisit budget then based on actual spend to date."
+    }
+  ],
+  "summary": {
+    "totalBudget": 82500,
+    "totalCommitted": 47400,
+    "totalSpent": 35700,
+    "totalVariance": -3400,
+    "totalVariancePercent": -0.041,
+    "projectsOverBudget": ["proj_002", "proj_003", "proj_005"],
+    "projectsUnderBudget": ["proj_001", "proj_004"],
+    "completedProjects": 4,
+    "inProgressProjects": 1,
+    "plannedProjects": 2,
+    "alerts": [
+      {
+        "projectId": "proj_005",
+        "severity": "warning",
+        "message": "Deck rebuild is 15.7% over budget. Cumulative overruns across projects total $2,900. Review all in-progress and upcoming project budgets before committing new spend."
+      }
+    ]
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "scenario": {
+    "id": "offer_test_001",
+    "description": "Motivated buyer, neutral market, inspection issues discovered, seller has made two price reductions",
+    "marketCondition": "neutral",
+    "buyerSituation": {
+      "preApprovalAmount": 320000,
+      "targetMaxPrice": 295000,
+      "downPaymentPercent": 0.10,
+      "downPaymentAmount": 29500,
+      "loanType": "Conventional",
+      "firstTimeBuyer": true,
+      "flexibilityOnClose": true,
+      "preferredCloseDate": "2026-05-15",
+      "contingencies": {
+        "financing": true,
+        "inspection": true,
+        "appraisal": true,
+        "salePriorHome": false
+      }
+    },
+    "listing": {
+      "address": "4217 Maplewood Drive, Crestfield, OH 44112",
+      "currentListPrice": 289000,
+      "originalListPrice": 304900,
+      "priceReductions": 2,
+      "daysOnMarket": 64,
+      "status": "Active",
+      "competingOffers": "None known",
+      "sellerSituation": "Seller has already purchased new home — carrying two mortgages. Motivated to close."
+    },
+    "inspectionFindings": {
+      "totalEstimatedRepairs": {
+        "low": 19300,
+        "high": 48750
+      },
+      "negotiationTargetItems": [
+        {
+          "item": "Roof replacement",
+          "estimatedCost": 11000,
+          "negotiationApproach": "Request credit or price reduction — roof is at end of life and confirmed by inspector"
+        },
+        {
+          "item": "Electrical panel (FPE Stab-Lok)",
+          "estimatedCost": 2500,
+          "negotiationApproach": "Request credit — safety issue, some insurers will not insure with this panel type"
+        },
+        {
+          "item": "Basement waterproofing",
+          "estimatedCost": 5500,
+          "negotiationApproach": "Negotiate credit — pending specialist evaluation, use midpoint estimate"
+        },
+        {
+          "item": "Furnace (near end of life)",
+          "estimatedCost": 4500,
+          "negotiationApproach": "Use as additional negotiating chip — less urgent than roof/electric/basement but adds to pattern"
+        }
+      ],
+      "totalNegotiationTarget": 23500
+    },
+    "comparableValueRange": {
+      "low": 262000,
+      "mid": 278000,
+      "high": 291000
+    }
+  },
+  "recommendedStrategy": {
+    "initialOfferPrice": 268000,
+    "rationale": "64 days on market with two price cuts signals seller fatigue. Seller is carrying two mortgages — motivated. Inspection revealed ~$19K–$49K in needed repairs, with a reasonable $23.5K negotiation target on clear-cut items. Comps support $270K–$282K for this condition. Offering $268K leaves room to negotiate up while accounting for repair costs. Even if accepted at ask ($289K), the repair burden makes the true cost $308K+.",
+    "walkAwayPrice": 282000,
+    "negotiationApproach": "credit",
+    "creditRequest": 19500,
+    "alternativeApproach": {
+      "offerPrice": 271000,
+      "creditRequest": 0,
+      "rationale": "If seller resists credits, offer $271K firm (price reduction achieves similar result). Simpler for financing."
+    },
+    "earnestMoney": {
+      "amount": 3000,
+      "notes": "1% of offer price is standard in this market. Do not go above $5K given number of unknowns."
+    },
+    "closeDate": {
+      "recommended": "2026-05-20",
+      "notes": "Give seller a clean 45-day close — they need time, offering certainty on timeline is a non-cash concession that can help your offer."
+    },
+    "contingencyAdvice": {
+      "keepInspection": true,
+      "keepFinancing": true,
+      "keepAppraisal": true,
+      "notes": "Do not waive inspection contingency given the known issues. This is not a multiple-offer situation — you have no competitive pressure to waive anything."
+    },
+    "escalationClause": {
+      "recommended": false,
+      "notes": "No known competing offers and 64 DOM — no escalation clause needed."
+    }
+  }
+}

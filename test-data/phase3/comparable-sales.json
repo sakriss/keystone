@@ -1,0 +1,103 @@
+{
+  "subjectProperty": {
+    "address": "4217 Maplewood Drive, Crestfield, OH 44112",
+    "listPrice": 289000,
+    "sqft": 2140,
+    "bedrooms": 3,
+    "bathrooms": 2.5,
+    "yearBuilt": 1987,
+    "condition": "Average — deferred maintenance items noted",
+    "pricePerSqft": 135.05
+  },
+  "comparables": [
+    {
+      "id": "comp_001",
+      "address": "4089 Birchwood Lane, Crestfield, OH 44112",
+      "salePrice": 297500,
+      "saleDate": "2026-01-22",
+      "sqft": 2080,
+      "bedrooms": 3,
+      "bathrooms": 2.5,
+      "yearBuilt": 1989,
+      "garage": "Attached 2-car",
+      "daysOnMarket": 18,
+      "condition": "Good — recently updated kitchen and baths",
+      "pricePerSqft": 143.03,
+      "distanceMiles": 0.4,
+      "notes": "Sold close to list. Kitchen fully renovated 2022. No major deferred maintenance. Comp skews high vs subject due to updates."
+    },
+    {
+      "id": "comp_002",
+      "address": "512 Ridgecrest Blvd, Crestfield, OH 44112",
+      "salePrice": 271000,
+      "saleDate": "2025-12-08",
+      "sqft": 2200,
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "yearBuilt": 1984,
+      "garage": "Attached 2-car",
+      "daysOnMarket": 47,
+      "condition": "Below average — needed roof and HVAC at time of sale",
+      "pricePerSqft": 123.18,
+      "distanceMiles": 0.7,
+      "notes": "Sold below ask after price reduction. Inspector flagged roof and furnace, buyer negotiated $18K credit. Closest comp to subject's situation."
+    },
+    {
+      "id": "comp_003",
+      "address": "4401 Elmwood Court, Crestfield, OH 44112",
+      "salePrice": 312000,
+      "saleDate": "2026-02-14",
+      "sqft": 2310,
+      "bedrooms": 4,
+      "bathrooms": 2.5,
+      "yearBuilt": 1991,
+      "garage": "Attached 2-car",
+      "daysOnMarket": 9,
+      "condition": "Excellent — move-in ready, new roof 2023",
+      "pricePerSqft": 135.06,
+      "distanceMiles": 0.9,
+      "notes": "Larger home, 4BR, newer roof, multiple offers. Comp skews high — not a direct match to subject."
+    },
+    {
+      "id": "comp_004",
+      "address": "308 Hawthorn Place, Crestfield, OH 44112",
+      "salePrice": 258000,
+      "saleDate": "2025-11-19",
+      "sqft": 1980,
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "yearBuilt": 1983,
+      "garage": "Detached 1-car",
+      "daysOnMarket": 72,
+      "condition": "Average — original everything, no major repairs",
+      "pricePerSqft": 130.30,
+      "distanceMiles": 1.1,
+      "notes": "Smaller home, detached garage, slightly different street. Sat on market similar to subject. Useful lower anchor."
+    },
+    {
+      "id": "comp_005",
+      "address": "4155 Maplewood Drive, Crestfield, OH 44112",
+      "salePrice": 284000,
+      "saleDate": "2025-10-31",
+      "sqft": 2100,
+      "bedrooms": 3,
+      "bathrooms": 2.5,
+      "yearBuilt": 1988,
+      "garage": "Attached 2-car",
+      "daysOnMarket": 33,
+      "condition": "Average — some deferred maintenance, no major systems replaced",
+      "pricePerSqft": 135.24,
+      "distanceMiles": 0.2,
+      "notes": "Same street as subject, nearly identical floor plan. Most direct comp. Sold in fall, slight seasonal softness may mean spring sale could push slightly higher."
+    }
+  ],
+  "analysis": {
+    "adjustedValueRange": {
+      "low": 262000,
+      "mid": 278000,
+      "high": 291000
+    },
+    "marketCondition": "Neutral — slight buyer's market in this price band. Average DOM in area is 38 days; subject has been sitting 64 days with two price reductions.",
+    "notes": "Subject's deferred maintenance (roof, panel, basement, furnace) places it closer to comp_002 and comp_004 range. Current list price of $289K appears slightly aggressive given condition. Fair market value accounting for known repair needs likely $270K–$282K."
+  }
+}
