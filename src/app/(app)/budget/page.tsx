@@ -2,9 +2,10 @@ import { createClient } from '@/lib/supabase/server'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatCurrency } from '@/lib/utils'
 import { EmptyState } from '@/components/ui/empty-state'
-import { DollarSign } from 'lucide-react'
+import { DollarSign, Home, SlidersHorizontal } from 'lucide-react'
 import { BudgetActions } from './budget-actions'
 import { BudgetTargetCard } from './budget-target'
+import Link from 'next/link'
 
 const CATEGORIES = [
   'Mortgage',
@@ -64,6 +65,36 @@ export default async function BudgetPage() {
           <p className="text-sm text-stone-500 mt-1">Estimate your monthly cost of ownership</p>
         </div>
         <BudgetActions mode="add" categories={CATEGORIES} />
+      </div>
+
+      {/* Quick tools */}
+      <div className="grid grid-cols-2 gap-3">
+        <Link href="/budget/true-cost" className="block">
+          <Card className="hover:border-amber-300 hover:shadow-md transition-all cursor-pointer h-full">
+            <CardContent className="py-4 px-5 flex items-center gap-3">
+              <div className="h-9 w-9 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0">
+                <Home className="h-4 w-4 text-amber-700" />
+              </div>
+              <div>
+                <p className="font-semibold text-stone-900 text-sm">True Cost Dashboard</p>
+                <p className="text-xs text-stone-500">Full monthly picture with mortgage</p>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
+        <Link href="/budget/scenarios" className="block">
+          <Card className="hover:border-amber-300 hover:shadow-md transition-all cursor-pointer h-full">
+            <CardContent className="py-4 px-5 flex items-center gap-3">
+              <div className="h-9 w-9 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+                <SlidersHorizontal className="h-4 w-4 text-blue-700" />
+              </div>
+              <div>
+                <p className="font-semibold text-stone-900 text-sm">What If Scenarios</p>
+                <p className="text-xs text-stone-500">Compare rates, down payments & terms</p>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
       </div>
 
       {/* Budget target */}

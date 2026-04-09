@@ -7,6 +7,7 @@ import { ClipboardList } from 'lucide-react'
 import { InspectionActions } from './inspection-actions'
 import Link from 'next/link'
 import { InspectionAnalysis } from '@/components/ai/inspection-analysis'
+import { InspectionNegotiation } from '@/components/ai/inspection-negotiation'
 
 export default async function InspectionsPage() {
   const supabase = await createClient()
@@ -95,6 +96,11 @@ export default async function InspectionsPage() {
                 inspectionId={inspection.id}
                 propertyId={inspection.property_id ?? undefined}
                 propertyAddress={(inspection.properties as { address: string } | null)?.address}
+              />
+
+              <InspectionNegotiation
+                inspectionId={inspection.id}
+                inspectionStatus={inspection.status}
               />
               </div>
             )

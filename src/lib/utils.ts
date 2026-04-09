@@ -45,6 +45,19 @@ export function statusLabel(status: string): string {
     wont_fix: "Won't Fix",
     open: 'Open',
     resolved: 'Resolved',
+    // Permit statuses
+    not_applied: 'Not Applied',
+    applied: 'Applied',
+    under_review: 'Under Review',
+    approved: 'Approved',
+    active: 'Active',
+    passed_inspection: 'Passed Inspection',
+    closed: 'Closed',
+    // Maintenance statuses
+    upcoming: 'Upcoming',
+    due: 'Due',
+    overdue: 'Overdue',
+    done: 'Done',
   }
   return labels[status] ?? status
 }
@@ -67,4 +80,17 @@ export const STATUS_COLORS: Record<string, string> = {
   open: 'bg-blue-100 text-blue-800',
   resolved: 'bg-green-100 text-green-800',
   wont_fix: 'bg-gray-100 text-gray-600',
+  // Permit statuses
+  not_applied: 'bg-stone-100 text-stone-600',
+  applied: 'bg-blue-100 text-blue-800',
+  under_review: 'bg-amber-100 text-amber-800',
+  approved: 'bg-green-100 text-green-800',
+  active: 'bg-green-100 text-green-800',
+  passed_inspection: 'bg-emerald-100 text-emerald-800',
+  closed: 'bg-stone-100 text-stone-500',
+  // Maintenance statuses
+  upcoming: 'bg-blue-100 text-blue-800',
+  due: 'bg-amber-100 text-amber-800',
+  overdue: 'bg-red-100 text-red-800',
+  done: 'bg-green-100 text-green-800',
 }

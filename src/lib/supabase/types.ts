@@ -317,6 +317,72 @@ export interface Database {
         Insert: Omit<Database['public']['Tables']['property_shares']['Row'], 'id' | 'created_at' | 'token'>
         Update: Partial<Database['public']['Tables']['property_shares']['Row']>
       }
+      maintenance_tasks: {
+        Row: {
+          id: string
+          user_id: string
+          property_id: string | null
+          title: string
+          description: string | null
+          category: 'HVAC' | 'Plumbing' | 'Electrical' | 'Exterior' | 'Interior' | 'Appliances' | 'Landscaping' | 'Safety' | 'Seasonal' | 'General'
+          recurrence: 'weekly' | 'monthly' | 'quarterly' | 'semi_annual' | 'annual' | 'one_time'
+          due_month: number | null
+          due_date: string | null
+          last_done_at: string | null
+          next_due_at: string | null
+          status: 'upcoming' | 'due' | 'overdue' | 'done'
+          estimated_cost: number | null
+          notes: string | null
+          sort_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['maintenance_tasks']['Row'], 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['maintenance_tasks']['Insert']>
+      }
+      moving_checklist_items: {
+        Row: {
+          id: string
+          user_id: string
+          property_id: string | null
+          title: string
+          category: 'before' | 'day_of' | 'after' | 'admin'
+          is_completed: boolean
+          completed_at: string | null
+          due_date: string | null
+          notes: string | null
+          sort_order: number
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['moving_checklist_items']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['moving_checklist_items']['Insert']>
+      }
+      permits: {
+        Row: {
+          id: string
+          user_id: string
+          property_id: string | null
+          permit_number: string | null
+          title: string
+          description: string | null
+          permit_type: 'building' | 'electrical' | 'plumbing' | 'mechanical' | 'roofing' | 'demolition' | 'zoning' | 'other'
+          status: 'not_applied' | 'applied' | 'under_review' | 'approved' | 'active' | 'passed_inspection' | 'closed' | 'rejected'
+          applied_at: string | null
+          approved_at: string | null
+          expires_at: string | null
+          inspection_date: string | null
+          contractor_id: string | null
+          estimated_cost: number | null
+          permit_fee: number | null
+          issuing_authority: string | null
+          notes: string | null
+          document_url: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['permits']['Row'], 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['permits']['Insert']>
+      }
     }
   }
 }

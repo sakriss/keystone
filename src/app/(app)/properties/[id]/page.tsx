@@ -11,6 +11,8 @@ import { NeighborhoodStats } from '@/components/neighborhood-stats'
 import { ShouldIBuyReport } from '@/components/ai/should-i-buy'
 import { OfferStrategy } from '@/components/ai/offer-strategy'
 import { LiveValuation } from '@/components/ai/live-valuation'
+import { SellerMotivation } from '@/components/ai/seller-motivation'
+import { HomeBuyingProgress } from '@/components/home-buying-progress'
 
 export default async function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -25,6 +27,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
     { data: inspections },
     { data: offers },
     { data: shares },
+    { data: preApprovals },
   ] = await Promise.all([
     // RLS now handles access control — no explicit user_id filter needed
     supabase.from('properties').select('*').eq('id', id).single(),
@@ -34,6 +37,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
     supabase.from('inspections').select('*').eq('property_id', id).order('created_at', { ascending: false }),
     supabase.from('offers').select('*').eq('property_id', id).order('offered_at', { ascending: false }),
     supabase.from('property_shares').select('*').eq('property_id', id).order('created_at'),
+    supabase.from('pre_approvals').select('id').eq('user_id', user!.id).limit(1),
   ])
 
   if (!property) notFound()
@@ -63,6 +67,15 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
           </div>
         </div>
       </div>
+
+      {/* Buying Journey Progress */}
+      <HomeBuyingProgress
+        property={property}
+        hasPreApproval={(preApprovals?.length ?? 0) > 0}
+        visitCount={visits?.length ?? 0}
+        offerCount={offers?.length ?? 0}
+        hasCompletedInspection={(inspections ?? []).some(i => i.status === 'completed')}
+      />
 
       {/* Quick stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -180,6 +193,8 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
         propertyId={property.id}
         propertyAddress={property.address}
       />
+
+      <SellerMotivation propertyId={property.id} />
 
       <OfferStrategy
         propertyId={property.id}

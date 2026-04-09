@@ -7,7 +7,8 @@ import { cn } from '@/lib/utils'
 import {
   LayoutDashboard, Home, FileCheck, DollarSign, Hammer,
   FolderOpen, ChevronDown, ChevronRight, LogOut, Menu, X, Building2,
-  ClipboardList, ShieldCheck, CalendarCheck, Banknote, BedDouble, ShoppingBag
+  ClipboardList, ShieldCheck, CalendarCheck, Banknote, BedDouble, ShoppingBag,
+  Truck, FileWarning, CalendarDays
 } from 'lucide-react'
 
 interface NavItem {
@@ -37,6 +38,7 @@ const NAV: NavItem[] = [
       { label: 'Inspections', href: '/purchase/inspections', icon: ClipboardList },
       { label: 'Insurance', href: '/purchase/insurance', icon: ShieldCheck },
       { label: 'Closing', href: '/purchase/closing', icon: CalendarCheck },
+      { label: 'Moving Checklist', href: '/purchase/moving-checklist', icon: Truck },
     ],
   },
   {
@@ -45,12 +47,18 @@ const NAV: NavItem[] = [
     icon: DollarSign,
   },
   {
+    label: 'Maintenance',
+    href: '/maintenance',
+    icon: CalendarDays,
+  },
+  {
     label: 'Home Renovation',
     icon: Hammer,
     children: [
-      { label: 'Rooms & Projects', href: '/renovation', icon: BedDouble, excludePaths: ['/renovation/sourcing', '/renovation/timeline'] },
+      { label: 'Rooms & Projects', href: '/renovation', icon: BedDouble, excludePaths: ['/renovation/sourcing', '/renovation/timeline', '/renovation/permits'] },
       { label: 'Sourcing', href: '/renovation/sourcing', icon: ShoppingBag },
       { label: 'Timeline', href: '/renovation/timeline', icon: CalendarCheck },
+      { label: 'Permit Tracker', href: '/renovation/permits', icon: FileWarning },
     ],
   },
   {
