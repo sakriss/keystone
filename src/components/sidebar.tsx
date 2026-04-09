@@ -78,7 +78,7 @@ function NavLink({ item, depth = 0 }: { item: NavItem; depth?: number }) {
     return (
       <div>
         <button
-          onClick={() => setOpen(!open)}
+          onClick={(e) => { e.stopPropagation(); setOpen(!open) }}
           className={cn(
             'w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors',
             'text-stone-300 hover:bg-stone-800 hover:text-white',
@@ -119,7 +119,7 @@ function NavLink({ item, depth = 0 }: { item: NavItem; depth?: number }) {
   )
 }
 
-function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
+function SidebarContent({ onNavClick, hideHeader }: { onNavClick?: () => void; hideHeader?: boolean }) {
   const router = useRouter()
   const supabase = createClient()
 
@@ -131,10 +131,12 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
   return (
     <div className="flex h-full flex-col bg-stone-900" onClick={onNavClick}>
       {/* Logo */}
-      <div className="flex items-center gap-2.5 px-4 py-5 border-b border-stone-800">
-        <img src="/logo.png" alt="Keystone" className="h-8 w-8 rounded-lg shrink-0 object-cover object-top" />
-        <span className="text-white font-bold text-lg tracking-tight">Keystone</span>
-      </div>
+      {!hideHeader && (
+        <div className="flex items-center gap-2.5 px-4 py-5 border-b border-stone-800">
+          <img src="/logo.png" alt="Keystone" className="h-8 w-8 rounded-lg shrink-0 object-cover object-top" />
+          <span className="text-white font-bold text-lg tracking-tight">Keystone</span>
+        </div>
+      )}
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto px-2 py-3 flex flex-col gap-0.5">
@@ -174,11 +176,7 @@ export function Sidebar() {
       </aside>
 
       {/* Mobile top bar */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 py-3 bg-stone-900 border-b border-stone-800">
-        <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="Keystone" className="h-7 w-7 rounded-lg shrink-0 object-cover object-top" />
-          <span className="text-white font-bold">Keystone</span>
-        </div>
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 flex items-center gap-3 px-4 py-3 bg-stone-900 border-b border-stone-800">
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="text-stone-300 hover:text-white p-1"
@@ -186,6 +184,10 @@ export function Sidebar() {
         >
           {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
+        <div className="flex items-center gap-2">
+          <img src="/logo.png" alt="Keystone" className="h-7 w-7 rounded-lg shrink-0 object-cover object-top" />
+          <span className="text-white font-bold">Keystone</span>
+        </div>
       </div>
 
       {/* Mobile drawer */}
@@ -193,7 +195,7 @@ export function Sidebar() {
         <div className="lg:hidden fixed inset-0 z-30 flex">
           <div className="w-64 flex-shrink-0">
             <div className="h-full pt-14">
-              <SidebarContent onNavClick={() => setMobileOpen(false)} />
+              <SidebarContent onNavClick={() => setMobileOpen(false)} hideHeader />
             </div>
           </div>
           <div
