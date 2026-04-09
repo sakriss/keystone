@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { formatCurrency, formatDate, statusLabel } from '@/lib/utils'
 import { EmptyState } from '@/components/ui/empty-state'
 import { CalendarCheck, CheckCircle2, Circle } from 'lucide-react'
-import { ClosingActions } from './closing-actions'
+import { ClosingActions, SeedClosingButton, ToggleClosingItem } from './closing-actions'
 
 const CATEGORY_ICONS: Record<string, string> = {
   document: '📄',
@@ -59,8 +59,14 @@ export default async function ClosingPage() {
           <EmptyState
             icon={CalendarCheck}
             title="No closing items yet"
-            description="Add documents, payments, and tasks you need to complete before closing."
-            action={<ClosingActions mode="add" properties={properties ?? []} />}
+            description="Start with the default checklist — 28 standard items covering documents, payments, appointments, and tasks. Or add your own."
+            action={
+              <div className="flex flex-col sm:flex-row items-center gap-3">
+                <SeedClosingButton properties={properties ?? []} />
+                <span className="text-xs text-stone-400">or</span>
+                <ClosingActions mode="add" properties={properties ?? []} />
+              </div>
+            }
           />
         </Card>
       ) : (
@@ -98,7 +104,7 @@ export default async function ClosingPage() {
                       <ul className="divide-y divide-stone-50">
                         {catItems.map(item => (
                           <li key={item.id} className="flex items-center gap-3 px-5 py-3">
-                            <ClosingActions mode="toggle" item={item} properties={properties ?? []} />
+                            <ToggleClosingItem item={item} />
                             <div className="flex-1 min-w-0">
                               <p className={`text-sm ${item.status === 'completed' ? 'line-through text-stone-400' : 'text-stone-800'}`}>
                                 {item.title}

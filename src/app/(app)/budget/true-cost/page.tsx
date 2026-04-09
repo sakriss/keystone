@@ -37,20 +37,37 @@ export default async function TrueCostPage() {
     ? calculateMonthlyPI(latestApproval.amount, latestApproval.interest_rate, 30)
     : null
 
-  // Budget items total
+  // Budget items total — if we have a P&I from pre-approval, exclude manually-entered
+  // Mortgage category items to avoid double-counting.
   type BudgetItem = NonNullable<typeof budgetItems>[number]
-  const budgetMonthly = budgetItems?.reduce((sum, item) => sum + toMonthly(item), 0) ?? 0
+  const excludedMortgageItems = mortgagePandI
+    ? (budgetItems ?? []).filter(i => i.category === 'Mortgage')
+    : []
+  const filteredItems = mortgagePandI
+    ? (budgetItems ?? []).filter(i => i.category !== 'Mortgage')
+    : (budgetItems ?? [])
 
-  // Group budget items by category
-  const byCategory = budgetItems?.reduce((acc, item) => {
+  const budgetMonthly = filteredItems.reduce((sum, item) => sum + toMonthly(item), 0)
+
+  // Group budget items by category (mortgage excluded if P&I is shown)
+  const byCategory = filteredItems.reduce((acc, item) => {
     const cat = item.category || 'Other'
     if (!acc[cat]) acc[cat] = []
     acc[cat].push(item)
     return acc
-  }, {} as Record<string, BudgetItem[]>) ?? {}
+  }, {} as Record<string, BudgetItem[]>)
 
   const grandTotal = (mortgagePandI ?? 0) + budgetMonthly
   const target = settings?.monthly_budget_target ?? null
+
+  // Budget status — drives card colors throughout
+  const budgetStatus: 'over' | 'under' | 'none' = !target ? 'none' : grandTotal > target ? 'over' : 'under'
+
+  const statusCard = {
+    over:  { card: 'border-red-300 bg-red-50',   label: 'text-red-700',  total: 'text-red-900',  annual: 'text-red-500',  targetLabel: 'text-red-700',  targetAmt: 'text-red-900',  diff: 'text-red-700 font-semibold' },
+    under: { card: 'border-green-300 bg-green-50', label: 'text-green-700', total: 'text-green-900', annual: 'text-green-600', targetLabel: 'text-green-700', targetAmt: 'text-green-900', diff: 'text-green-700 font-semibold' },
+    none:  { card: 'border-amber-200 bg-amber-50', label: 'text-amber-700', total: 'text-amber-900', annual: 'text-amber-600', targetLabel: 'text-amber-700', targetAmt: 'text-amber-900', diff: '' },
+  }[budgetStatus]
 
   // Build breakdown for bar chart
   const breakdown: { label: string; value: number }[] = []
@@ -72,22 +89,22 @@ export default async function TrueCostPage() {
       </div>
 
       {/* Grand total card */}
-      <Card className="border-amber-200 bg-amber-50">
+      <Card className={statusCard.card}>
         <CardContent className="py-5 px-6">
           <div className="flex items-center justify-between gap-4 flex-wrap">
             <div>
-              <p className="text-sm text-amber-700 font-medium">Estimated Monthly Total</p>
-              <p className="text-4xl font-black text-amber-900 mt-1">{formatCurrency(grandTotal)}</p>
-              <p className="text-xs text-amber-600 mt-1">{formatCurrency(grandTotal * 12)} per year</p>
+              <p className={`text-sm font-medium ${statusCard.label}`}>Estimated Monthly Total</p>
+              <p className={`text-4xl font-black mt-1 ${statusCard.total}`}>{formatCurrency(grandTotal)}</p>
+              <p className={`text-xs mt-1 ${statusCard.annual}`}>{formatCurrency(grandTotal * 12)} per year</p>
             </div>
             {target && (
               <div className="text-right">
-                <p className="text-xs text-amber-700 font-medium">Monthly Budget Target</p>
-                <p className="text-2xl font-bold text-amber-900">{formatCurrency(target)}</p>
-                {grandTotal > target ? (
-                  <p className="text-xs text-red-600 font-medium mt-1">{formatCurrency(grandTotal - target)} over budget</p>
+                <p className={`text-xs font-medium ${statusCard.targetLabel}`}>Monthly Budget Target</p>
+                <p className={`text-2xl font-bold ${statusCard.targetAmt}`}>{formatCurrency(target)}</p>
+                {budgetStatus === 'over' ? (
+                  <p className="text-sm text-red-700 font-bold mt-1">⚠ {formatCurrency(grandTotal - target)} over budget</p>
                 ) : (
-                  <p className="text-xs text-green-700 font-medium mt-1">{formatCurrency(target - grandTotal)} remaining</p>
+                  <p className="text-sm text-green-700 font-bold mt-1">✓ {formatCurrency(target - grandTotal)} under budget</p>
                 )}
               </div>
             )}
@@ -143,6 +160,17 @@ export default async function TrueCostPage() {
                 Estimated on 30-year term. Does not include taxes, insurance, or PMI. Actual payment may vary.{' '}
                 <Link href="/budget/scenarios" className="text-amber-600 hover:underline">Model different scenarios →</Link>
               </p>
+              {excludedMortgageItems.length > 0 && (
+                <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-1">
+                  <AlertCircle className="h-3.5 w-3.5 text-amber-600 mt-0.5 flex-shrink-0" />
+                  <p className="text-xs text-amber-700">
+                    Your manual mortgage expense{excludedMortgageItems.length > 1 ? 's' : ''} (
+                    {excludedMortgageItems.map(i => i.name).join(', ')}
+                    ) {excludedMortgageItems.length > 1 ? 'are' : 'is'} excluded from the total below to avoid double-counting.{' '}
+                    <Link href="/budget" className="underline">Edit in Budget →</Link>
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </CardContent>
@@ -206,10 +234,21 @@ export default async function TrueCostPage() {
                 </div>
               )
             })}
-            <div className="flex items-center gap-3 pt-1 border-t border-stone-100">
+            <div className="flex items-center gap-3 pt-2 border-t border-stone-100">
               <div className="w-28 text-right text-xs font-bold text-stone-700 shrink-0">Total</div>
-              <div className="flex-1" />
-              <div className="text-sm font-bold text-stone-900 w-24 text-right shrink-0">{formatCurrency(grandTotal)}/mo</div>
+              <div className="flex-1">
+                {target && (
+                  <div className="h-2 bg-stone-100 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full ${budgetStatus === 'over' ? 'bg-red-500' : budgetStatus === 'under' ? 'bg-green-500' : 'bg-amber-500'}`}
+                      style={{ width: `${Math.min((grandTotal / target) * 100, 100)}%` }}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className={`text-sm font-bold w-24 text-right shrink-0 ${budgetStatus === 'over' ? 'text-red-700' : budgetStatus === 'under' ? 'text-green-700' : 'text-stone-900'}`}>
+                {formatCurrency(grandTotal)}/mo
+              </div>
             </div>
           </CardContent>
         </Card>

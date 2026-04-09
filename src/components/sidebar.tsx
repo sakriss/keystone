@@ -37,7 +37,7 @@ const NAV: NavItem[] = [
       { label: 'Pre-Approvals', href: '/purchase/pre-approvals', icon: Banknote },
       { label: 'Inspections', href: '/purchase/inspections', icon: ClipboardList },
       { label: 'Insurance', href: '/purchase/insurance', icon: ShieldCheck },
-      { label: 'Closing', href: '/purchase/closing', icon: CalendarCheck },
+      { label: 'Closing Checklist', href: '/purchase/closing', icon: CalendarCheck },
       { label: 'Moving Checklist', href: '/purchase/moving-checklist', icon: Truck },
     ],
   },

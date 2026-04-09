@@ -3,7 +3,7 @@ import { useState, useTransition } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input, Textarea, Select } from '@/components/ui/input'
 import { Modal } from '@/components/ui/modal'
-import { Plus, Edit, Trash2, CheckCircle2, Circle } from 'lucide-react'
+import { Plus, Edit, CheckCircle2, Circle } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 
@@ -22,23 +22,77 @@ const STATUS_OPTIONS = [
 
 interface ClosingItem { id: string; title: string; status: string; [key: string]: unknown }
 
+// ── Standalone toggle button with optimistic state ──────────────────────────
+export function ToggleClosingItem({ item }: { item: ClosingItem }) {
+  const [completed, setCompleted] = useState(item.status === 'completed')
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
+  const supabase = createClient()
+
+  async function handleToggle() {
+    const next = !completed
+    setCompleted(next)          // instant visual update
+    setLoading(true)
+    await supabase
+      .from('closing_items')
+      .update({ status: next ? 'completed' : 'pending' })
+      .eq('id', item.id)
+    setLoading(false)
+    router.refresh()            // sync server state in background
+  }
+
+  return (
+    <button
+      onClick={handleToggle}
+      disabled={loading}
+      className="text-stone-400 hover:text-amber-600 transition-colors shrink-0 disabled:opacity-50"
+    >
+      {completed
+        ? <CheckCircle2 className="h-5 w-5 text-green-500" />
+        : <Circle className="h-5 w-5" />
+      }
+    </button>
+  )
+}
+
 interface Props {
-  mode: 'add' | 'edit' | 'toggle'
+  mode: 'add' | 'edit'
   item?: ClosingItem
   properties: { id: string; address: string }[]
 }
 
-const DEFAULT_ITEMS = [
-  { title: 'Purchase agreement signed', category: 'document' },
-  { title: 'Earnest money deposited', category: 'payment' },
-  { title: 'Home inspection completed', category: 'appointment' },
-  { title: 'Appraisal ordered', category: 'appointment' },
-  { title: 'Loan application submitted', category: 'document' },
-  { title: 'Title search ordered', category: 'task' },
-  { title: 'Homeowner\'s insurance bound', category: 'document' },
+const DEFAULT_ITEMS: { title: string; category: 'document' | 'payment' | 'appointment' | 'task' }[] = [
+  // Documents
+  { title: 'Purchase agreement signed by all parties', category: 'document' },
+  { title: 'Loan application submitted to lender', category: 'document' },
+  { title: 'Earnest money receipt obtained', category: 'document' },
+  { title: 'Home inspection report received', category: 'document' },
+  { title: 'Appraisal report received', category: 'document' },
+  { title: 'Title commitment / title search results reviewed', category: 'document' },
+  { title: "Homeowner's insurance policy binder obtained", category: 'document' },
+  { title: 'Closing disclosure (CD) reviewed — 3 days before closing', category: 'document' },
+  { title: 'Final loan approval / clear to close received', category: 'document' },
+  { title: 'HOA documents reviewed (if applicable)', category: 'document' },
+  // Payments
+  { title: 'Earnest money deposited to escrow', category: 'payment' },
+  { title: 'Appraisal fee paid', category: 'payment' },
+  { title: 'Home inspection fee paid', category: 'payment' },
+  { title: 'Down payment wired to escrow', category: 'payment' },
+  { title: 'Closing costs confirmed and wired', category: 'payment' },
+  // Appointments
+  { title: 'Home inspection scheduled', category: 'appointment' },
+  { title: 'Appraisal appointment confirmed', category: 'appointment' },
   { title: 'Final walkthrough scheduled', category: 'appointment' },
-  { title: 'Closing disclosure reviewed', category: 'document' },
-  { title: 'Closing funds wired', category: 'payment' },
+  { title: 'Closing date / signing appointment confirmed', category: 'appointment' },
+  // Tasks
+  { title: 'Interest rate locked with lender', category: 'task' },
+  { title: 'Seller repair requests submitted (post-inspection)', category: 'task' },
+  { title: 'Title insurance confirmed (owner\'s policy)', category: 'task' },
+  { title: 'Review title report for any liens or issues', category: 'task' },
+  { title: 'Confirm closing attorney or escrow officer', category: 'task' },
+  { title: 'Arrange transfer of utilities to your name', category: 'task' },
+  { title: 'Obtain cashier\'s check or confirm wire instructions', category: 'task' },
+  { title: 'Collect all keys, fobs, and garage openers at closing', category: 'task' },
 ]
 
 export function ClosingActions({ mode, item, properties }: Props) {
@@ -48,24 +102,6 @@ export function ClosingActions({ mode, item, properties }: Props) {
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
   const supabase = createClient()
-  const refresh = () => startTransition(() => router.refresh())
-
-  if (mode === 'toggle') {
-    const toggleStatus = async () => {
-      if (!item) return
-      const next = item.status === 'completed' ? 'pending' : 'completed'
-      await supabase.from('closing_items').update({ status: next }).eq('id', item.id)
-      refresh()
-    }
-    return (
-      <button onClick={toggleStatus} className="text-stone-400 hover:text-amber-600 transition-colors shrink-0">
-        {item?.status === 'completed'
-          ? <CheckCircle2 className="h-5 w-5 text-green-500" />
-          : <Circle className="h-5 w-5" />
-        }
-      </button>
-    )
-  }
 
   if (mode === 'edit') {
     return (
@@ -79,9 +115,10 @@ export function ClosingActions({ mode, item, properties }: Props) {
             properties={properties}
             onClose={() => setOpen(false)}
             onSave={async (data) => {
-              await supabase.from('closing_items').update(data).eq('id', item!.id)
+              const { error } = await supabase.from('closing_items').update(data).eq('id', item!.id)
+              if (error) throw new Error(error.message)
               setOpen(false)
-              refresh()
+              router.refresh()
             }}
             isPending={isPending}
           />
@@ -95,7 +132,7 @@ export function ClosingActions({ mode, item, properties }: Props) {
     const items = DEFAULT_ITEMS.map((item, i) => ({
       property_id: selectedProperty,
       title: item.title,
-      category: item.category as 'document' | 'payment' | 'appointment' | 'task',
+      category: item.category,
       status: 'pending' as const,
       sort_order: i,
     }))
@@ -109,30 +146,24 @@ export function ClosingActions({ mode, item, properties }: Props) {
     <>
       <Button onClick={() => setOpen(true)}><Plus className="h-4 w-4" /> Add Item</Button>
       <Modal open={open} onClose={() => setOpen(false)} title="Add Closing Item" size="md">
-        <div className="space-y-4">
-          <Button variant="secondary" className="w-full" onClick={() => { setOpen(false); setBulkOpen(true) }}>
-            📋 Load default checklist for a property
-          </Button>
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-stone-200" /></div>
-            <div className="relative flex justify-center"><span className="bg-white px-2 text-xs text-stone-400">or add one item</span></div>
-          </div>
-          <ClosingItemForm
-            properties={properties}
-            onClose={() => setOpen(false)}
-            onSave={async (data) => {
-              await supabase.from('closing_items').insert(data)
-              setOpen(false)
-              refresh()
-            }}
-            isPending={isPending}
-          />
-        </div>
+        <ClosingItemForm
+          properties={properties}
+          onClose={() => setOpen(false)}
+          onSave={async (data) => {
+            const { error } = await supabase.from('closing_items').insert(data)
+            if (error) throw new Error(error.message)
+            setOpen(false)
+            router.refresh()
+          }}
+          isPending={isPending}
+        />
       </Modal>
 
       <Modal open={bulkOpen} onClose={() => setBulkOpen(false)} title="Load Default Checklist" size="sm">
         <div className="space-y-4">
-          <p className="text-sm text-stone-600">This will add {DEFAULT_ITEMS.length} standard closing items for the selected property.</p>
+          <p className="text-sm text-stone-600">
+            Adds {DEFAULT_ITEMS.length} standard closing items across Documents, Payments, Appointments, and Tasks.
+          </p>
           <select
             value={selectedProperty}
             onChange={e => setSelectedProperty(e.target.value)}
@@ -151,6 +182,63 @@ export function ClosingActions({ mode, item, properties }: Props) {
   )
 }
 
+export function SeedClosingButton({ properties }: { properties: { id: string; address: string }[] }) {
+  const [open, setOpen] = useState(false)
+  const [selectedProperty, setSelectedProperty] = useState(properties.length === 1 ? properties[0].id : '')
+  const [isPending, startTransition] = useTransition()
+  const router = useRouter()
+  const supabase = createClient()
+  const refresh = () => startTransition(() => router.refresh())
+
+  async function handleSeed() {
+    if (!selectedProperty) return
+    const items = DEFAULT_ITEMS.map((item, i) => ({
+      property_id: selectedProperty,
+      title: item.title,
+      category: item.category,
+      status: 'pending' as const,
+      sort_order: i,
+    }))
+    await supabase.from('closing_items').insert(items)
+    setOpen(false)
+    refresh()
+  }
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>
+        Load Default Checklist
+      </Button>
+      <Modal open={open} onClose={() => setOpen(false)} title="Load Default Checklist" size="sm">
+        <div className="space-y-4">
+          <p className="text-sm text-stone-600">
+            Adds {DEFAULT_ITEMS.length} standard closing items across Documents, Payments, Appointments, and Tasks. You can edit or remove any item after loading.
+          </p>
+          {properties.length !== 1 && (
+            <select
+              value={selectedProperty}
+              onChange={e => setSelectedProperty(e.target.value)}
+              className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+            >
+              <option value="">Select property…</option>
+              {properties.map(p => <option key={p.id} value={p.id}>{p.address}</option>)}
+            </select>
+          )}
+          {properties.length === 1 && (
+            <p className="text-sm font-medium text-stone-700 bg-stone-50 rounded-lg px-3 py-2">
+              {properties[0].address}
+            </p>
+          )}
+          <div className="flex gap-3 justify-end">
+            <Button variant="secondary" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button onClick={handleSeed} disabled={!selectedProperty} loading={isPending}>Load Checklist</Button>
+          </div>
+        </div>
+      </Modal>
+    </>
+  )
+}
+
 interface FormProps {
   item?: ClosingItem
   properties: { id: string; address: string }[]
@@ -160,42 +248,95 @@ interface FormProps {
 }
 
 function ClosingItemForm({ item, properties, onClose, onSave, isPending }: FormProps) {
+  const [propertyId, setPropertyId] = useState(item ? '' : '')
+  const [title, setTitle] = useState(item?.title ?? '')
+  const [category, setCategory] = useState((item?.category as string) ?? 'task')
+  const [status, setStatus] = useState(item?.status ?? 'pending')
+  const [dueDate, setDueDate] = useState((item?.due_date as string) ?? '')
+  const [amount, setAmount] = useState((item?.amount as number | string) ?? '')
+  const [notes, setNotes] = useState((item?.notes as string) ?? '')
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState('')
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const fd = new FormData(e.currentTarget)
-    await onSave({
-      property_id: fd.get('property_id'),
-      title: fd.get('title'),
-      category: fd.get('category') || null,
-      status: fd.get('status') || 'pending',
-      due_date: (fd.get('due_date') as string) || null,
-      amount: fd.get('amount') ? Number(fd.get('amount')) : null,
-      notes: (fd.get('notes') as string) || null,
-    })
+    setError('')
+    setSaving(true)
+    try {
+      await onSave({
+        ...(!item && propertyId ? { property_id: propertyId } : {}),
+        title,
+        category: category || null,
+        status: status || 'pending',
+        due_date: dueDate || null,
+        amount: amount !== '' ? Number(amount) : null,
+        notes: notes || null,
+      })
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Save failed')
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       {!item && (
-        <select name="property_id" required defaultValue=""
-          className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+        <select
+          required
+          value={propertyId}
+          onChange={e => setPropertyId(e.target.value)}
+          className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+        >
           <option value="">Select property…</option>
           {properties.map(p => <option key={p.id} value={p.id}>{p.address}</option>)}
         </select>
       )}
-      <Input name="title" label="Title *" placeholder="Sign purchase agreement" required defaultValue={item?.title ?? ''} />
+      <Input
+        label="Title *"
+        placeholder="Sign purchase agreement"
+        required
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+      />
       <div className="grid grid-cols-2 gap-3">
-        <Select name="category" label="Category" options={CATEGORY_OPTIONS} defaultValue={(item?.category as string) ?? 'task'} />
-        <Select name="status" label="Status" options={STATUS_OPTIONS} defaultValue={item?.status ?? 'pending'} />
+        <Select
+          label="Category"
+          options={CATEGORY_OPTIONS}
+          value={category}
+          onChange={e => setCategory(e.target.value)}
+        />
+        <Select
+          label="Status"
+          options={STATUS_OPTIONS}
+          value={status}
+          onChange={e => setStatus(e.target.value)}
+        />
       </div>
       <div className="grid grid-cols-2 gap-3">
-        <Input name="due_date" type="date" label="Due Date" defaultValue={(item?.due_date as string) ?? ''} />
-        <Input name="amount" type="number" label="Amount" defaultValue={(item?.amount as number) ?? ''} />
+        <Input
+          type="date"
+          label="Due Date"
+          value={dueDate}
+          onChange={e => setDueDate(e.target.value)}
+        />
+        <Input
+          type="number"
+          label="Amount"
+          value={amount}
+          onChange={e => setAmount(e.target.value)}
+        />
       </div>
-      <Textarea name="notes" label="Notes" rows={2} defaultValue={(item?.notes as string) ?? ''} />
+      <Textarea
+        label="Notes"
+        rows={2}
+        value={notes}
+        onChange={e => setNotes(e.target.value)}
+      />
+      {error && <p className="text-sm text-red-600">{error}</p>}
       <div className="flex gap-3 justify-end pt-2">
         <Button type="button" variant="secondary" onClick={onClose}>Cancel</Button>
-        <Button type="submit" loading={isPending}>Save</Button>
+        <Button type="submit" loading={saving || isPending}>Save</Button>
       </div>
     </form>
   )
